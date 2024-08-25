@@ -1,0 +1,8 @@
+body {
+    /* background: linear-gradient( #01ffff, #00ecfa, #00cef1, #00b8ea); */
+    height: 100vh;
+}
+.ant-select-selection-placeholder{
+    font-weight: bold;
+    color: #797979 !important;
+  }
