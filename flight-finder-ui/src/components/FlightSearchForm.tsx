@@ -29,11 +29,12 @@ const FlightSearchForm = ({ search }: FlightSearchFormProps) => {
     {},
     { refetchOnMountOrArgChange: true }
   );
+  const [airports, setAirports] = useState([]);
   const [originAirpots, setOriginAirport] = useState([]);
   const [arrivalAirpots, setArrivalAirport] = useState([]);
   const [hasSelectAirport, setHasSelectAirport] = useState({
-    originSelect: false,
-    arrivalSelect: false,
+    originSelect: null,
+    arrivalSelect: null,
   });
 
   const [tripMode, setTripMode] = useState<string>(oneWayTrip.value);
@@ -49,8 +50,27 @@ const FlightSearchForm = ({ search }: FlightSearchFormProps) => {
       }));
       setOriginAirport(airports);
       setArrivalAirport(airports);
+      setAirports(airports);
     }
   }, [data, isSuccess]);
+  useEffect(() => {
+    if (hasSelectAirport) {
+      if (hasSelectAirport.originSelect) {
+        const arrival = airports.filter(
+          f => f.value !== hasSelectAirport.originSelect
+        );
+        setArrivalAirport(arrival);
+      } else if (
+        !hasSelectAirport.originSelect &&
+        hasSelectAirport.arrivalSelect
+      ) {
+        const origins = airports.filter(
+          f => f.value !== hasSelectAirport.arrivalSelect
+        );
+        setOriginAirport(origins);
+      }
+    }
+  }, [hasSelectAirport]);
   return (
     <Flex justify="center" style={{ marginTop: 20 }}>
       <Form
@@ -102,6 +122,12 @@ const FlightSearchForm = ({ search }: FlightSearchFormProps) => {
                   style={{ width: "80%" }}
                   loading={isFetching}
                   optionFilterProp="label"
+                  onChange={v =>
+                    setHasSelectAirport(prev => ({
+                      ...prev,
+                      originSelect: v.value,
+                    }))
+                  }
                 />
               </Form.Item>
             </Col>
@@ -124,6 +150,12 @@ const FlightSearchForm = ({ search }: FlightSearchFormProps) => {
                   style={{ width: "80%" }}
                   loading={isFetching}
                   optionFilterProp="label"
+                  onChange={v =>
+                    setHasSelectAirport(prev => ({
+                      ...prev,
+                      arrivalSelect: v.value,
+                    }))
+                  }
                 />
               </Form.Item>
             </Col>

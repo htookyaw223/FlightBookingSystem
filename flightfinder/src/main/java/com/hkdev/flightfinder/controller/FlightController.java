@@ -11,7 +11,6 @@ import com.hkdev.flightfinder.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,28 +21,24 @@ public class FlightController {
     @Autowired
     private FlightService flightService;
 
-    @RequestMapping("/public/test")
-    public String test() {
-        return "Hello";
-    }
 
-    @PostMapping("/public/flights")
+    @PostMapping("/flights")
     public TripFlightDto getFlightList(@RequestBody FlightRequestDto dto) {
 
         return flightService.getFlightList(dto);
     }
 
-    @PostMapping("/public/airports")
+    @PostMapping("/airports")
     public List<Airport> getAirports(@RequestBody AirportReqDto dto) {
         return flightService.getAirports(dto);
     }
 
-    @PostMapping("/public/book-flight")
+    @PostMapping("/book-flight")
     public BookingResDto bookFlight(@RequestBody FlightBookingDto dto) {
         return flightService.bookFlight(dto);
     }
 
-    @PostMapping("/public/trip-flights")
+    @PostMapping("/trip-flights")
     public TripFlightDto getTripFlightList(@RequestBody FlightTripReqDto dto) {
 
         return flightService.getTripFlightList(dto);

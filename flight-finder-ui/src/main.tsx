@@ -8,6 +8,7 @@ import PageLayout from "./pages/index.tsx";
 import { ConfigProvider } from "antd";
 import { Provider } from "react-redux";
 import { store } from "./reduxtoolkit/store/index.ts";
+import LoginPage from "./pages/loginPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <FlightSearchPage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {

@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
     DEFAULT_ERROR("Unknown Error", HttpStatus.BAD_REQUEST),
-    RESOURCE_NOT_FOUND("Resourece Not Found",HttpStatus.NOT_FOUND),
+    RESOURCE_NOT_FOUND("Resourece Not Found", HttpStatus.NOT_FOUND),
     //Authorization Codes
     INVALID_TOKEN("Access token is invalid", HttpStatus.FORBIDDEN),
-    PARENT_NOT_FOUND( "Parent Not Found", HttpStatus.BAD_REQUEST),
-    INTERNAL_SERVER_ERROR("",HttpStatus.INTERNAL_SERVER_ERROR),
+    INTERNAL_SERVER_ERROR("", HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_PASSWORD("Invalid password", HttpStatus.BAD_REQUEST),
     TOKEN_EXPIRED("Token expired!", HttpStatus.UNAUTHORIZED);
 
     private final String value;
