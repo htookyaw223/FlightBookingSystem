@@ -40,6 +40,11 @@ import dayjs from "dayjs";
 import { airLineLogo } from "../utils/airLineLogo";
 import PaymentDrawer from "../components/PaymentDrawer";
 
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe("your-publishable-key-here");
+
 const BookingPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -247,7 +252,7 @@ const BookingPage = () => {
                                   showNow={false}
                                   format={"DD/MM/YYYY"}
                                   placeholder="DD/MM/YYYY"
-                                  onChange={() => {}}
+                                  onChange={() => { }}
                                   style={{ width: "80%" }}
                                 />
                               </Form.Item>
@@ -390,7 +395,7 @@ const BookingPage = () => {
                                   showNow={false}
                                   format={"DD/MM/YYYY"}
                                   placeholder="DD/MM/YYYY"
-                                  onChange={() => {}}
+                                  onChange={() => { }}
                                   style={{ width: "80%" }}
                                 />
                               </Form.Item>
@@ -515,11 +520,10 @@ const BookingPage = () => {
                                 <Image
                                   preview={false}
                                   width={40}
-                                  src={`${
-                                    airLineLogo[
-                                      data.departureFlights[0].airLineLogo
+                                  src={`${airLineLogo[
+                                    data.departureFlights[0].airLineLogo
                                     ]
-                                  }`}
+                                    }`}
                                 />
                                 <Typography.Text>
                                   {data.departureFlights[0].airLineName}
@@ -560,16 +564,15 @@ const BookingPage = () => {
                                                 .departureTime,
                                               "minutes"
                                             ) / 60
-                                          )}hr ${
-                                            dayjs(
-                                              data.departureFlights[0]
-                                                .arrivalTime
-                                            ).diff(
-                                              data.departureFlights[0]
-                                                .departureTime,
-                                              "minutes"
-                                            ) % 60
-                                          }m`}
+                                          )}hr ${dayjs(
+                                            data.departureFlights[0]
+                                              .arrivalTime
+                                          ).diff(
+                                            data.departureFlights[0]
+                                              .departureTime,
+                                            "minutes"
+                                          ) % 60
+                                            }m`}
                                         </Typography.Text>
                                       ),
                                       status: "finish",
@@ -645,11 +648,10 @@ const BookingPage = () => {
                                 <Image
                                   preview={false}
                                   width={40}
-                                  src={`${
-                                    airLineLogo[
-                                      data.returnFlights[0].airLineLogo
+                                  src={`${airLineLogo[
+                                    data.returnFlights[0].airLineLogo
                                     ]
-                                  }`}
+                                    }`}
                                 />
                                 <Typography.Text>
                                   {data.returnFlights[0].airLineName}
@@ -690,15 +692,14 @@ const BookingPage = () => {
                                                 .departureTime,
                                               "minutes"
                                             ) / 60
-                                          )}hr ${
-                                            dayjs(
-                                              data.returnFlights[0].arrivalTime
-                                            ).diff(
-                                              data.returnFlights[0]
-                                                .departureTime,
-                                              "minutes"
-                                            ) % 60
-                                          }m`}
+                                          )}hr ${dayjs(
+                                            data.returnFlights[0].arrivalTime
+                                          ).diff(
+                                            data.returnFlights[0]
+                                              .departureTime,
+                                            "minutes"
+                                          ) % 60
+                                            }m`}
                                         </Typography.Text>
                                       ),
                                       status: "finish",
@@ -806,11 +807,13 @@ const BookingPage = () => {
               </Col>
             </Row>
           </Form>
-          <PaymentDrawer
-            visible={openPaymentDrawer}
-            onClose={() => setOpenPaymentDrawer(false)}
-            confirmPayment={paymentInfo => confirmPayment(paymentInfo)}
-          />
+          <Elements stripe={stripePromise}>
+            <PaymentDrawer
+              visible={openPaymentDrawer}
+              onClose={() => setOpenPaymentDrawer(false)}
+              confirmPayment={paymentInfo => confirmPayment(paymentInfo)}
+            />
+          </Elements>
         </>
       )}
     </Spin>
